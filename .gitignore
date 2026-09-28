@@ -1,0 +1,17 @@
+# Environment / secrets
+.env
+.env.*
+
+# Node
+node_modules/
+dist/
+
+# PHP
+/vendor/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
