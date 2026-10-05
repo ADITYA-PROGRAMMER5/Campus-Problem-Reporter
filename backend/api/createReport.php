@@ -1,7 +1,9 @@
 <?php
 
+// Browser ko bata raha hai ki ye JSON format me data bhej raha hai
 header("Content-Type: application/json");
 
+// db.php file ko include karo tabi information ko access mile
 require_once "../db.php";
 
 // Only allow POST requests
