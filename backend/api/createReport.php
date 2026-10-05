@@ -6,7 +6,9 @@ header("Content-Type: application/json");
 // db.php file ko include karo tabi information ko access mile
 require_once "../db.php";
 
-// Only allow POST requests
+// Check if the request method is POST
+// Agar request method POST nahi hai to 405 error code bhej do
+// 405 = Method Not Allowed, HTTP status code hai
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
 
