@@ -12,11 +12,13 @@ require_once "../db.php";
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
 
+    // Success = false, Method post nhi hai aue message print krdo
     echo json_encode([
         "success" => false,
         "message" => "Only POST requests are allowed"
     ]);
 
+    // Exit = PHP ka function hai jo script ko end kr deta hai
     exit;
 }
 
