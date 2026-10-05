@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 // Get JSON data from request
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Check required fields
+// Check kro ki required fields present hai ya nahi
 $requiredFields = [
     "user_id",
     "title",
