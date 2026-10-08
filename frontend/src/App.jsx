@@ -158,37 +158,53 @@ function App() {
       {reports.length === 0 ? (
         <p>No reports found.</p>
       ) : (
-        <div>
+        <div className="reports-container">
           {reports.map((report) => (
-            <div key={report.id}>
-              <h3>{report.title}</h3>
+            <div className="report-card" key={report.id}>
 
-              <p>
-                <strong>Description:</strong>{" "}
+              <div className="report-header">
+                <h3>{report.title}</h3>
+
+                <span className={`status ${report.status}`}>
+                  {report.status}
+                </span>
+              </div>
+
+              <p className="description">
                 {report.description}
               </p>
 
-              <p>
-                <strong>Category:</strong>{" "}
-                {report.category}
-              </p>
+              <div className="report-details">
 
-              <p>
-                <strong>Location:</strong>{" "}
-                {report.location}
-              </p>
+                <p>
+                  <strong>Category:</strong>{" "}
+                  {report.category}
+                </p>
 
-              <p>
-                <strong>Priority:</strong>{" "}
-                {report.priority}
-              </p>
+                <p>
+                  <strong>Location:</strong>{" "}
+                  {report.location}
+                </p>
 
-              <p>
-                <strong>Status:</strong>{" "}
-                {report.status}
-              </p>
+                <p>
+                  <strong>Priority:</strong>{" "}
+                  <span className={`priority ${report.priority}`}>
+                    {report.priority}
+                  </span>
+                </p>
 
-              <hr />
+                <p>
+                  <strong>Reported by:</strong>{" "}
+                  {report.student_name}
+                </p>
+
+                <p>
+                  <strong>Date:</strong>{" "}
+                  {report.created_at}
+                </p>
+
+              </div>
+
             </div>
           ))}
         </div>
