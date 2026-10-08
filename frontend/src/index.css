@@ -53,3 +53,8 @@ button {
   transition: background 0.5s ease, transform 0.7s ease;
 }
 
+
+button:hover {
+  background: #5828dd;
+  transform: scale(1.05);
+}
