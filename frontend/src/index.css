@@ -37,3 +37,8 @@ select {
   font-size: 15px;
 }
 
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
