@@ -42,3 +42,14 @@ textarea {
   resize: vertical;
 }
 
+button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.5s ease, transform 0.7s ease;
+}
+
