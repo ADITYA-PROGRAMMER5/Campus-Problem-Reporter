@@ -28,7 +28,7 @@ function App() {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/api/create_report.php",
+        "http://localhost:8000/api/createReport.php",
         {
           method: "POST",
           headers: {
