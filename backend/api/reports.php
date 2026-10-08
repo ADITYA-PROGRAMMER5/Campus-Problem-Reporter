@@ -1,6 +1,24 @@
 <?php
 
+// Browser ko bata raha hai ki API JSON format me data bhej rahi hai
 header("Content-Type: application/json");
+
+// React frontend ko PHP API access karne ki permission
+header("Access-Control-Allow-Origin: http://localhost:5173");
+
+// Allowed HTTP methods
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+
+// Allowed request headers
+header("Access-Control-Allow-Headers: Content-Type");
+
+// Browser ki preflight OPTIONS request handle karo
+if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
+    http_response_code(204);
+    exit;
+}
+
+require_once "../db.php";
 
 require_once "../db.php";
 
