@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
+  // Form data
   const [formData, setFormData] = useState({
     user_id: 1,
     title: "",
@@ -10,8 +11,35 @@ function App() {
     priority: "medium",
   });
 
+  // Store reports received from the backend
+  const [reports, setReports] = useState([]);
+
+  // Message shown to the user
   const [message, setMessage] = useState("");
 
+  // Fetch reports from PHP backend
+  const fetchReports = async () => {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/reports.php"
+      );
+
+      const data = await response.json();
+
+      if (data.success) {
+        setReports(data.reports);
+      }
+    } catch (error) {
+      console.error("Failed to fetch reports:", error);
+    }
+  };
+
+  // Fetch reports when the page loads
+  useEffect(() => {
+    fetchReports();
+  }, []);
+
+  // Handle input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -21,6 +49,7 @@ function App() {
     });
   };
 
+  // Handle form submission
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -43,6 +72,7 @@ function App() {
       if (data.success) {
         setMessage("Report submitted successfully!");
 
+        // Clear form
         setFormData({
           user_id: 1,
           title: "",
@@ -51,6 +81,9 @@ function App() {
           location: "",
           priority: "medium",
         });
+
+        // Fetch latest reports
+        fetchReports();
       } else {
         setMessage(data.message);
       }
@@ -64,6 +97,7 @@ function App() {
     <div>
       <h1>Campus Problem Reporter</h1>
 
+      {/* Report Form */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -115,7 +149,50 @@ function App() {
         </button>
       </form>
 
+      {/* Success / Error Message */}
       <p>{message}</p>
+
+      {/* My Reports */}
+      <h2>My Reports</h2>
+
+      {reports.length === 0 ? (
+        <p>No reports found.</p>
+      ) : (
+        <div>
+          {reports.map((report) => (
+            <div key={report.id}>
+              <h3>{report.title}</h3>
+
+              <p>
+                <strong>Description:</strong>{" "}
+                {report.description}
+              </p>
+
+              <p>
+                <strong>Category:</strong>{" "}
+                {report.category}
+              </p>
+
+              <p>
+                <strong>Location:</strong>{" "}
+                {report.location}
+              </p>
+
+              <p>
+                <strong>Priority:</strong>{" "}
+                {report.priority}
+              </p>
+
+              <p>
+                <strong>Status:</strong>{" "}
+                {report.status}
+              </p>
+
+              <hr />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
