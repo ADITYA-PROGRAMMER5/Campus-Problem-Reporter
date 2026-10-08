@@ -58,3 +58,9 @@ button:hover {
   background: #5828dd;
   transform: scale(1.05);
 }
+
+form + p {
+  margin-top: -25px;
+  margin-bottom: 35px;
+}
+
