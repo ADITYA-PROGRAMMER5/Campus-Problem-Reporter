@@ -111,3 +111,8 @@ h2 {
   text-transform: capitalize;
 }
 
+.status.pending {
+  background: #fef3c7;
+  color: #ff0000;
+}
+
