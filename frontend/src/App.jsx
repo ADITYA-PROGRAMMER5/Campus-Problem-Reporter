@@ -97,7 +97,6 @@ function App() {
     <div>
       <h1>Campus Problem Reporter</h1>
 
-      {/* Report Form */}
       <form onSubmit={handleSubmit}>
         <input
           type="text"
@@ -152,7 +151,6 @@ function App() {
       {/* Success / Error Message */}
       <p>{message}</p>
 
-      {/* My Reports */}
       <h2>My Reports</h2>
 
       {reports.length === 0 ? (
