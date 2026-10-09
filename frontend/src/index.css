@@ -69,3 +69,9 @@ h2 {
   margin-bottom: 20px;
 }
 
+.reports-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
