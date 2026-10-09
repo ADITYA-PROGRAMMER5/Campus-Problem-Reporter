@@ -120,3 +120,8 @@ h2 {
   background: #dbeafe;
   color: #e1ff00;
 }
+
+.status.resolved {
+  background: #dcfce7;
+  color: #00ff62;
+}
