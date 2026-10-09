@@ -103,3 +103,11 @@ h2 {
   margin: 10px 0;
 }
 
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
