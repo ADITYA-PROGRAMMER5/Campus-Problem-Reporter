@@ -116,3 +116,7 @@ h2 {
   color: #ff0000;
 }
 
+.status.in-progress {
+  background: #dbeafe;
+  color: #e1ff00;
+}
