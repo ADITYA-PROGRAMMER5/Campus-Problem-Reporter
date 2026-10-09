@@ -126,3 +126,9 @@ h2 {
   color: #00ff62;
 }
 
+/* Priority */
+.priority {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
