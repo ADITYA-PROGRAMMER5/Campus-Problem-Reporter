@@ -61,3 +61,15 @@ if ($name === "" || $email === "" || $password === "") {
     exit;
 }
 
+// Validate email format
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+
+    echo json_encode([
+        "success" => false,
+        "message" => "Please enter a valid email address"
+    ]);
+
+    exit;
+}
+
