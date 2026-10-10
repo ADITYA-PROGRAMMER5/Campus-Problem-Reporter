@@ -154,3 +154,60 @@ h2 {
     flex-direction: column;
   }
 }
+
+.register-container {
+  width: 100%;
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 28px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.register-container h1 {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.register-container > p {
+  margin-bottom: 24px;
+  text-align: center;
+  color: #666;
+}
+
+.register-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.register-container input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+.register-container button {
+  padding: 12px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 6px;
+  background: #6d28d9;
+  color: white;
+  cursor: pointer;
+}
+
+.register-container button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.register-container .form-message {
+  margin: 12px 0 0;
+  text-align: center;
+  color: #333;
+}
