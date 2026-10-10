@@ -33,3 +33,31 @@ require_once "../db.php";
 // Read JSON data sent by React
 $data = json_decode(file_get_contents("php://input"), true);
 
+// Check whether valid JSON was received
+if (!is_array($data)) {
+    http_response_code(400);
+
+    echo json_encode([
+        "success" => false,
+        "message" => "Invalid JSON data"
+    ]);
+
+    exit;
+}
+
+// Get the email and password
+$email = trim($data["email"] ?? "");
+$password = $data["password"] ?? "";
+
+// Validate required fields
+if ($email === "" || $password === "") {
+    http_response_code(400);
+
+    echo json_encode([
+        "success" => false,
+        "message" => "Email and password are required"
+    ]);
+
+    exit;
+}
+
