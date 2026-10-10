@@ -73,3 +73,15 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
+// Require at least 8 characters
+if (strlen($password) < 8) {
+    http_response_code(400);
+
+    echo json_encode([
+        "success" => false,
+        "message" => "Password must be at least 8 characters"
+    ]);
+
+    exit;
+}
+
