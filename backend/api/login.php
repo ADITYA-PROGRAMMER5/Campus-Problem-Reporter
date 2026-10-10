@@ -61,3 +61,52 @@ if ($email === "" || $password === "") {
     exit;
 }
 
+try {
+    // Find the student using their email
+    $sql = "
+        SELECT id, name, email, password, role
+        FROM users
+        WHERE email = :email
+    ";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute([
+        ":email" => $email
+    ]);
+
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Check the password against the stored password hash
+    if (!$user || !password_verify($password, $user["password"])) {
+        http_response_code(401);
+
+        echo json_encode([
+            "success" => false,
+            "message" => "Invalid email or password"
+        ]);
+
+        exit;
+    }
+
+    // Remove the password hash before returning user data
+    unset($user["password"]);
+
+    // Login successful
+    echo json_encode([
+        "success" => true,
+        "message" => "Login successful",
+        "user" => $user
+    ]);
+
+} catch (PDOException $e) {
+    // Keep technical database details out of the public response
+    error_log($e->getMessage());
+
+    http_response_code(500);
+
+    echo json_encode([
+        "success" => false,
+        "message" => "Login failed. Please try again."
+    ]);
+}
