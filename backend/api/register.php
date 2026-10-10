@@ -44,3 +44,20 @@ if (!is_array($data)) {
     exit;
 }
 
+// Get and clean form values
+$name = trim($data["name"] ?? "");
+$email = trim($data["email"] ?? "");
+$password = $data["password"] ?? "";
+
+// Validate required fields
+if ($name === "" || $email === "" || $password === "") {
+    http_response_code(400);
+
+    echo json_encode([
+        "success" => false,
+        "message" => "Name, email and password are required"
+    ]);
+
+    exit;
+}
+
