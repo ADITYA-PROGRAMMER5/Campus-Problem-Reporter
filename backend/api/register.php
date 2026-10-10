@@ -26,3 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
+// Connect to the database
+require_once "../db.php";
+
+// Read JSON data sent by React
+$data = json_decode(file_get_contents("php://input"), true);
+
