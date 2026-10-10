@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import { registerStudent } from "../Services/api";
 
 function Register() {
   // Store the student's form values
@@ -22,45 +23,31 @@ function Register() {
     }));
   }
 
-  // Send the registration details to PHP
-  async function handleSubmit(event) {
-    event.preventDefault();
+async function handleSubmit(event) {
+  event.preventDefault();
 
-    setMessage("");
-    setLoading(true);
+  setMessage("");
+  setLoading(true);
 
-    try {
-      const response = await fetch(
-        "http://localhost:8000/api/register.php",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
-        }
-      );
+  try {
+    // Call the API function from services/api.js
+    const data = await registerStudent(formData);
 
-      const data = await response.json();
+    setMessage(data.message);
 
-      if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
-      }
-
-      setMessage(data.message);
-
-      // Clear the form after successful registration
-      setFormData({
-        name: "",
-        email: "",
-        password: "",
-      });
-    } catch (error) {
-      setMessage(error.message || "Could not connect to the server.");
-    } finally {
-      setLoading(false);
-    }
+    // Clear the form after successful registration
+    setFormData({
+      name: "",
+      email: "",
+      password: "",
+    });
+  } catch (error) {
+    // Display the error returned by the API
+    setMessage(error.message || "Could not connect to the server.");
+  } finally {
+    setLoading(false);
   }
+}
 
   return (
     <main className="register-container">
