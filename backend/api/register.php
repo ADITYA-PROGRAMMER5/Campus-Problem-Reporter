@@ -85,3 +85,70 @@ if (strlen($password) < 8) {
     exit;
 }
 
+try {
+
+    // Check if the email already exists
+    $checkSql = "SELECT id FROM users WHERE email = :email";
+
+    $checkStmt = $pdo->prepare($checkSql);
+
+    $checkStmt->execute([
+        ":email" => $email
+    ]);
+
+    if ($checkStmt->fetch()) {
+        http_response_code(409);
+
+        echo json_encode([
+            "success" => false,
+            "message" => "This email is already registered"
+        ]);
+
+        exit;
+    }
+
+    // Hash the password before storing it
+    $hashedPassword = password_hash(
+        $password,
+        PASSWORD_DEFAULT
+    );
+
+    // Insert the new student into the database
+    $sql = "
+        INSERT INTO users (name, email, password, role)
+        VALUES (:name, :email, :password, 'student')
+        RETURNING id, name, email, role, created_at
+    ";
+
+    $stmt = $pdo->prepare($sql);
+
+    $stmt->execute([
+        ":name" => $name,
+        ":email" => $email,
+        ":password" => $hashedPassword
+    ]);
+
+    // Get the newly created user's details
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Return success response
+    http_response_code(201);
+
+    echo json_encode([
+        "success" => true,
+        "message" => "Registration successful",
+        "user" => $user
+    ]);
+
+} catch (PDOException $e) {
+
+    // Log technical details on the server, not in the public response
+    error_log($e->getMessage());
+
+    http_response_code(500);
+
+    echo json_encode([
+        "success" => false,
+        "message" => "Registration failed. Please try again."
+    ]);
+}
