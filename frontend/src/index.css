@@ -211,3 +211,23 @@ h2 {
   text-align: center;
   color: #333;
 }
+
+.auth-navigation {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin: 24px auto 0;
+}
+
+.auth-navigation button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  background: #6d28d9;
+  color: white;
+  cursor: pointer;
+}
+
+.auth-navigation button:hover {
+  background: #5b21b6;
+}
