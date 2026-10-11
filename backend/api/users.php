@@ -9,7 +9,6 @@ require_once "../db.php";
 try {
     // SQL query run kar rhe hai jo users table se data fetch karega
     // Aur sab users ko id ke descending order me dikhayega
-    // SQL Table se data lega
     $stmt = $pdo->query(
         "SELECT id, name, email, role, created_at
          FROM users
