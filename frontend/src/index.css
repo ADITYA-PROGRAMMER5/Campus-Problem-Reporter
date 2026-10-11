@@ -231,3 +231,20 @@ h2 {
 .auth-navigation button:hover {
   background: #5b21b6;
 }
+
+.auth-switch {
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+}
+
+.auth-switch a {
+  color: #6d28d9;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-switch a:hover {
+  text-decoration: underline;
+}
