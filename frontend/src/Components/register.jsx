@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { registerStudent } from "../Services/api";
 
-function Register() {
-  // Store the student's form values
+function Register({ onLogin }) {  // Store the student's form values
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -23,31 +22,31 @@ function Register() {
     }));
   }
 
-async function handleSubmit(event) {
-  event.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-  setMessage("");
-  setLoading(true);
+    setMessage("");
+    setLoading(true);
 
-  try {
-    // Call the API function from services/api.js
-    const data = await registerStudent(formData);
+    try {
+      // Call the API function from services/api.js
+      const data = await registerStudent(formData);
 
-    setMessage(data.message);
+      setMessage(data.message);
 
-    // Clear the form after successful registration
-    setFormData({
-      name: "",
-      email: "",
-      password: "",
-    });
-  } catch (error) {
-    // Display the error returned by the API
-    setMessage(error.message || "Could not connect to the server.");
-  } finally {
-    setLoading(false);
+      // Clear the form after successful registration
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+      });
+    } catch (error) {
+      // Display the error returned by the API
+      setMessage(error.message || "Could not connect to the server.");
+    } finally {
+      setLoading(false);
+    }
   }
-}
 
   return (
     <main className="register-container">
@@ -95,6 +94,19 @@ async function handleSubmit(event) {
 
         {message && <p className="form-message">{message}</p>}
       </form>
+
+      <p className="auth-switch">
+        Already have an account?{" "}
+        <a
+          href="#login"
+          onClick={(event) => {
+            event.preventDefault();
+            onLogin();
+          }}
+        >
+          Login
+        </a>
+      </p>
     </main>
   );
 }
