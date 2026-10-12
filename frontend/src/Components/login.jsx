@@ -32,15 +32,14 @@ function Login({ onCreateAccount, onLoginSuccess }) {
       const data = await loginStudent(formData);
 
       setMessage(data.message);
-      setLoggedInUser(data.user);
-
-      // Clear the password field after successful login
       setFormData((previousData) => ({
         ...previousData,
         password: "",
       }));
+
+      // Send the logged-in user's details to App.jsx
+      onLoginSuccess(data.user);
     } catch (error) {
-      setLoggedInUser(null);
       setMessage(error.message || "Could not connect to the server.");
     } finally {
       setLoading(false);
