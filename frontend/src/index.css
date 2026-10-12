@@ -59,7 +59,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-form + p {
+form+p {
   margin-top: -25px;
   margin-bottom: 35px;
 }
@@ -171,7 +171,7 @@ h2 {
   text-align: center;
 }
 
-.register-container > p {
+.register-container>p {
   margin-bottom: 24px;
   text-align: center;
   color: #666;
