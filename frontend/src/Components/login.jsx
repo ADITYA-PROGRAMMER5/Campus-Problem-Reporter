@@ -10,7 +10,6 @@ function Login({ onCreateAccount, onLoginSuccess }) {
 
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
 
   // Update the field being typed into
   function handleChange(event) {
