@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { loginStudent } from "../Services/api";
 
-function Login({ onCreateAccount }) {
+function Login({ onCreateAccount, onLoginSuccess }) {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
