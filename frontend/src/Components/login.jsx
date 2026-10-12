@@ -81,14 +81,6 @@ function Login({ onCreateAccount, onLoginSuccess }) {
         {message && <p className="form-message">{message}</p>}
       </form>
 
-      {loggedInUser && (
-        <section>
-          <h2>Welcome, {loggedInUser.name}!</h2>
-          <p>Email: {loggedInUser.email}</p>
-          <p>Role: {loggedInUser.role}</p>
-        </section>
-      )}
-
       <p className="auth-switch">
         Don't have an account?{" "}
         <a
