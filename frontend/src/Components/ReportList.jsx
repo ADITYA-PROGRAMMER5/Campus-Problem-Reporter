@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function ReportList({ refreshKey }) {
+function ReportList({ refreshKey, userId }) {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
