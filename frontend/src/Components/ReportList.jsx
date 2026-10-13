@@ -12,7 +12,7 @@ function ReportList({ refreshKey, userId }) {
 
     try {
       const response = await fetch(
-        "http://localhost:8000/api/reports.php"
+        `http://localhost:8000/api/myReports.php?user_id=${userId}`
       );
 
       const data = await response.json();
