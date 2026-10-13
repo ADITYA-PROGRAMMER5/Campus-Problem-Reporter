@@ -31,8 +31,8 @@ function ReportList({ refreshKey, userId }) {
 
   // Load reports when the component opens or refreshKey changes
   useEffect(() => {
-    fetchReports();
-  }, [refreshKey]);
+  fetchReports();
+}, [refreshKey, userId]);
 
   if (loading) {
     return <p>Loading reports...</p>;
