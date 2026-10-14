@@ -38,15 +38,15 @@ function ReportList({ refreshKey, userId }) {
 
   // Filter reports by title and selected status
   const filteredReports = reports.filter((report) => {
-  const matchesSearch = report.title
-    .toLowerCase()
-    .includes(searchTerm.toLowerCase());
+    const matchesSearch = report.title
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
 
-  const matchesStatus =
-    statusFilter === "all" || report.status === statusFilter;
+    const matchesStatus =
+      statusFilter === "all" || report.status === statusFilter;
 
-  return matchesSearch && matchesStatus;
-});
+    return matchesSearch && matchesStatus;
+  });
 
   if (loading) {
     return <p>Loading reports...</p>;
@@ -54,7 +54,27 @@ function ReportList({ refreshKey, userId }) {
 
   return (
     <section className="report-list">
-      <h2>Campus Reports</h2>
+
+      <h2>My Reports</h2>
+
+      <div className="report-filters">
+        <input
+          type="text"
+          placeholder="Search reports by title..."
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+        />
+
+        <select
+          value={statusFilter}
+          onChange={(event) => setStatusFilter(event.target.value)}
+        >
+          <option value="all">All Statuses</option>
+          <option value="pending">Pending</option>
+          <option value="in_progress">In Progress</option>
+          <option value="resolved">Resolved</option>
+        </select>
+      </div>
 
       {message && <p className="form-message">{message}</p>}
 
