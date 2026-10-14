@@ -4,6 +4,8 @@ function ReportList({ refreshKey, userId }) {
   const [reports, setReports] = useState([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
 
   // Fetch reports from the PHP backend
   async function fetchReports() {
@@ -33,6 +35,18 @@ function ReportList({ refreshKey, userId }) {
   useEffect(() => {
     fetchReports();
   }, [refreshKey, userId]);
+
+  // Filter reports by title and selected status
+  const filteredReports = reports.filter((report) => {
+  const matchesSearch = report.title
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
+
+  const matchesStatus =
+    statusFilter === "all" || report.status === statusFilter;
+
+  return matchesSearch && matchesStatus;
+});
 
   if (loading) {
     return <p>Loading reports...</p>;
