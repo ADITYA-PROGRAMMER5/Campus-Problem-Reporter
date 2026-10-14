@@ -54,7 +54,13 @@ function ReportList({ refreshKey, userId }) {
             <div className="report-header">
               <h3>{report.title}</h3>
               <span className={`status ${report.status}`}>
-                {report.status}
+                {report.status === "pending"
+                  ? "Pending"
+                  : report.status === "in_progress"
+                    ? "In Progress"
+                    : report.status === "resolved"
+                      ? "Resolved"
+                      : report.status}
               </span>
             </div>
 
