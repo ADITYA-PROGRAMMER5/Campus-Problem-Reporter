@@ -36,6 +36,18 @@ function ReportList({ refreshKey, userId }) {
     fetchReports();
   }, [refreshKey, userId]);
 
+  // Filter reports by title and selected status
+  const filteredReports = reports.filter((report) => {
+  const matchesSearch = report.title
+    .toLowerCase()
+    .includes(searchTerm.toLowerCase());
+
+  const matchesStatus =
+    statusFilter === "all" || report.status === statusFilter;
+
+  return matchesSearch && matchesStatus;
+});
+
   if (loading) {
     return <p>Loading reports...</p>;
   }
