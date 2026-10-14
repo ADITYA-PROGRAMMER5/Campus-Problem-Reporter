@@ -28,7 +28,7 @@ function Dashboard({ user, onLogout }) {
         onReportCreated={handleReportCreated}
       />
 
-      <ReportList refreshKey={refreshKey} />
+      <ReportList refreshKey={refreshKey} userId={user.id} />
     </main>
   );
 }
