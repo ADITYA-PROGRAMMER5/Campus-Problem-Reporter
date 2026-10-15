@@ -132,6 +132,15 @@ function ReportList({ refreshKey, userId }) {
               <p><strong>Reported by:</strong> {report.student_name}</p>
               <p><strong>Date:</strong> {report.created_at}</p>
             </div>
+
+            <button
+              type="button"
+              className="edit-report-btn"
+              onClick={() => alert(`Edit report ID: ${report.id}`)}
+            >
+              Edit Report
+            </button>
+
           </article>
         ))}
       </div>
