@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Register from "./components/Register";
-import Login from "./components/Login";
 import Dashboard from "./components/Dashboard";
+import Login from "./components/Login";
+import Register from "./components/Register";
 import "./index.css";
 
 // Restore the saved user when the app starts
