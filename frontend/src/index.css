@@ -318,6 +318,48 @@ h2 {
   cursor: pointer;
 }
 
+/* Pagination container */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+/* Previous and Next buttons */
+.pagination button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 6px;
+  background: #6d28d9;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+/* Hover effect */
+.pagination button:hover:not(:disabled) {
+  background: #5b21b6;
+  transform: scale(1.05);
+}
+
+/* Disabled button */
+.pagination button:disabled {
+  background: #d1d5db;
+  color: #6b7280;
+  cursor: not-allowed;
+}
+
+/* Page number */
+.pagination span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #374151;
+}
+
 @media (max-width: 600px) {
   .dashboard-header {
     align-items: flex-start;
