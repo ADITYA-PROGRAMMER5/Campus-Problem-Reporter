@@ -49,6 +49,19 @@ function ReportList({ refreshKey, userId }) {
     return matchesSearch && matchesStatus;
   });
 
+  const reportsPerPage = 5;
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(filteredReports.length / reportsPerPage);
+
+  // Find the reports to display on the current page
+  const startIndex = (currentPage - 1) * reportsPerPage;
+
+  const currentReports = filteredReports.slice(
+    startIndex,
+    startIndex + reportsPerPage
+  );
+
   if (loading) {
     return <p>Loading reports...</p>;
   }
@@ -82,7 +95,7 @@ function ReportList({ refreshKey, userId }) {
       {!message && filteredReports.length === 0 && (
         <p>No matching reports found.</p>
       )}
-      
+
       <div className="reports-container">
         {filteredReports.map((report) => (
           <article className="report-card" key={report.id}>
