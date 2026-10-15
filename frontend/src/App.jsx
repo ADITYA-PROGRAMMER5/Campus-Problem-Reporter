@@ -1,37 +1,53 @@
-
 import { useState } from "react";
-import Register from "./Components/Register";
-import Login from "./Components/login";
-import Dashboard from "./Components/Dashboard";
+import Register from "./components/Register";
+import Login from "./components/Login";
+import Dashboard from "./components/Dashboard";
 import "./index.css";
 
-function App() {
-  const [currentPage, setCurrentPage] = useState("login");
-  const [user, setUser] = useState(null);
+// Restore the saved user when the app starts
+function getSavedUser() {
+  try {
+    const savedUser = sessionStorage.getItem("campusReporterUser");
+    return savedUser ? JSON.parse(savedUser) : null;
+  } catch {
+    return null;
+  }
+}
 
-  // Save the user and open the dashboard after successful login
+function App() {
+  const [user, setUser] = useState(() => getSavedUser());
+
+  const [currentPage, setCurrentPage] = useState(() =>
+    getSavedUser() ? "dashboard" : "login"
+  );
+
+  // Save user details after successful login
   function handleLoginSuccess(userData) {
+    sessionStorage.setItem(
+      "campusReporterUser",
+      JSON.stringify(userData)
+    );
+
     setUser(userData);
     setCurrentPage("dashboard");
   }
 
-  // Log out and return to the login page
+  // Clear saved user details on logout
   function handleLogout() {
+    sessionStorage.removeItem("campusReporterUser");
+
     setUser(null);
     setCurrentPage("login");
   }
 
-  // Show the dashboard after login
   if (currentPage === "dashboard" && user) {
     return <Dashboard user={user} onLogout={handleLogout} />;
   }
 
-  // Show registration
   if (currentPage === "register") {
     return <Register onLogin={() => setCurrentPage("login")} />;
   }
 
-  // Show login by default
   return (
     <Login
       onCreateAccount={() => setCurrentPage("register")}
