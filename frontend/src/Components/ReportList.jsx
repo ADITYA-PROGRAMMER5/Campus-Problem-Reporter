@@ -6,6 +6,7 @@ function ReportList({ refreshKey, userId }) {
   const [message, setMessage] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
   // Fetch reports from the PHP backend
   async function fetchReports() {
