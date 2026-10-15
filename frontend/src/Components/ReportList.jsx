@@ -78,10 +78,10 @@ function ReportList({ refreshKey, userId }) {
 
       {message && <p className="form-message">{message}</p>}
 
-      {!message && reports.length === 0 && (
-        <p>No reports found.</p>
+      {!message && filteredReports.length === 0 && (
+        <p>No matching reports found.</p>
       )}
-
+      
       <div className="reports-container">
         {filteredReports.map((report) => (
           <article className="report-card" key={report.id}>
