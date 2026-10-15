@@ -97,7 +97,7 @@ function ReportList({ refreshKey, userId }) {
       )}
 
       <div className="reports-container">
-        {filteredReports.map((report) => (
+        {currentReports.map((report) => (
           <article className="report-card" key={report.id}>
             <div className="report-header">
               <h3>{report.title}</h3>
