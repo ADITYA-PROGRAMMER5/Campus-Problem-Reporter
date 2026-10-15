@@ -131,6 +131,31 @@ function ReportList({ refreshKey, userId }) {
           </article>
         ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            type="button"
+            onClick={() => setCurrentPage((page) => page - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+
+          <span>
+            Page {currentPage} of {totalPages}
+          </span>
+
+          <button
+            type="button"
+            onClick={() => setCurrentPage((page) => page + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      )}
+
     </section>
   );
 }
