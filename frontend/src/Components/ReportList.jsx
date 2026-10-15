@@ -37,6 +37,10 @@ function ReportList({ refreshKey, userId }) {
     fetchReports();
   }, [refreshKey, userId]);
 
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, statusFilter]);
+
   // Filter reports by title and selected status
   const filteredReports = reports.filter((report) => {
     const matchesSearch = report.title
