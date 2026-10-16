@@ -70,7 +70,7 @@ function ReportList({ refreshKey, userId }) {
     }));
   }
 
-  function handleEditSubmit(event) {
+  async function handleEditSubmit(event) {
     event.preventDefault();
 
     if (!editingReport) return;
@@ -84,21 +84,41 @@ function ReportList({ refreshKey, userId }) {
       return;
     }
 
-    // Temporary frontend-only save.
-    // PostgreSQL is not updated yet.
-    setReports((previousReports) =>
-      previousReports.map((report) =>
-        report.id === editingReport.id
-          ? { ...report, ...editData }
-          : report
-      )
-    );
+    setEditMessage("Saving changes...");
 
-    closeEditModal();
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/updateReport.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: editingReport.id,
+            user_id: userId,
+            ...editData,
+          }),
+        }
+      );
 
-    setMessage(
-      "Changes updated on this page only. They are not saved to the database."
-    );
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Failed to update report.");
+      }
+
+      // Reload reports from PostgreSQL.
+      await fetchReports();
+
+      closeEditModal();
+
+      setMessage("Report updated successfully!");
+    } catch (error) {
+      setEditMessage(
+        error.message || "Could not connect to the server."
+      );
+    }
   }
 
   const filteredReports = reports.filter((report) => {
@@ -173,10 +193,10 @@ function ReportList({ refreshKey, userId }) {
                 {report.status === "pending"
                   ? "Pending"
                   : report.status === "in_progress"
-                  ? "In Progress"
-                  : report.status === "resolved"
-                  ? "Resolved"
-                  : report.status}
+                    ? "In Progress"
+                    : report.status === "resolved"
+                      ? "Resolved"
+                      : report.status}
               </span>
             </div>
 
