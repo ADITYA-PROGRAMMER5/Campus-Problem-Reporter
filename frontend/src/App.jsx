@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Dashboard from "./components/Dashboard";
-import Login from "./components/Login";
+import Dashboard from "./Components/Dashboard";
+import Login from "./Components/login";
 import Register from "./components/Register";
 import "./index.css";
 
