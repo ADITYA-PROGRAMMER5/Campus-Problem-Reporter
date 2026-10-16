@@ -8,9 +8,16 @@ function ReportList({ refreshKey, userId }) {
   const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
 
+  // Edit modal state
   const [editingReport, setEditingReport] = useState(null);
   const [editData, setEditData] = useState({});
   const [editMessage, setEditMessage] = useState("");
+  const [savingEdit, setSavingEdit] = useState(false);
+
+  // Delete confirmation modal state
+  const [deletingReport, setDeletingReport] = useState(null);
+  const [deleteMessage, setDeleteMessage] = useState("");
+  const [deleting, setDeleting] = useState(false);
 
   async function fetchReports() {
     setLoading(true);
@@ -43,6 +50,8 @@ function ReportList({ refreshKey, userId }) {
     setCurrentPage(1);
   }, [searchTerm, statusFilter, refreshKey]);
 
+  // ---------------- EDIT REPORT ----------------
+
   function startEditing(report) {
     setEditingReport(report);
     setEditMessage("");
@@ -56,6 +65,8 @@ function ReportList({ refreshKey, userId }) {
   }
 
   function closeEditModal() {
+    if (savingEdit) return;
+
     setEditingReport(null);
     setEditData({});
     setEditMessage("");
@@ -73,7 +84,7 @@ function ReportList({ refreshKey, userId }) {
   async function handleEditSubmit(event) {
     event.preventDefault();
 
-    if (!editingReport) return;
+    if (!editingReport || savingEdit) return;
 
     const hasChanges = Object.keys(editData).some(
       (key) => (editingReport[key] || "") !== editData[key]
@@ -84,6 +95,7 @@ function ReportList({ refreshKey, userId }) {
       return;
     }
 
+    setSavingEdit(true);
     setEditMessage("Saving changes...");
 
     try {
@@ -108,18 +120,82 @@ function ReportList({ refreshKey, userId }) {
         throw new Error(data.message || "Failed to update report.");
       }
 
-      // Reload reports from PostgreSQL.
       await fetchReports();
 
-      closeEditModal();
-
+      setEditingReport(null);
+      setEditData({});
+      setEditMessage("");
       setMessage("Report updated successfully!");
     } catch (error) {
       setEditMessage(
         error.message || "Could not connect to the server."
       );
+    } finally {
+      setSavingEdit(false);
     }
   }
+
+  // ---------------- DELETE REPORT ----------------
+
+  function startDeleting(report) {
+    setDeletingReport(report);
+    setDeleteMessage("");
+  }
+
+  function closeDeleteModal() {
+    if (deleting) return;
+
+    setDeletingReport(null);
+    setDeleteMessage("");
+  }
+
+  async function handleDeleteReport() {
+    if (!deletingReport || deleting) return;
+
+    setDeleting(true);
+    setDeleteMessage("Deleting report...");
+
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/deleteReport.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: deletingReport.id,
+            user_id: userId,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Failed to delete report.");
+      }
+
+      // Remove the deleted report from the visible list.
+      setReports((previousReports) =>
+        previousReports.filter(
+          (report) => report.id !== deletingReport.id
+        )
+      );
+
+      setDeletingReport(null);
+      setDeleteMessage("");
+      setMessage("Report deleted successfully!");
+    } catch (error) {
+      setDeleteMessage(
+        error.message || "Could not connect to the server."
+      );
+    } finally {
+      setDeleting(false);
+    }
+  }
+
+  // ---------------- SEARCH AND PAGINATION ----------------
 
   const filteredReports = reports.filter((report) => {
     const matchesSearch = (report.title || "")
@@ -143,6 +219,13 @@ function ReportList({ refreshKey, userId }) {
     startIndex,
     startIndex + reportsPerPage
   );
+
+  // Keep the current page valid after deleting the last item on it.
+  useEffect(() => {
+    if (totalPages > 0 && currentPage > totalPages) {
+      setCurrentPage(totalPages);
+    }
+  }, [totalPages, currentPage]);
 
   if (loading) {
     return <p>Loading reports...</p>;
@@ -179,7 +262,7 @@ function ReportList({ refreshKey, userId }) {
         </select>
       </div>
 
-      {!message && filteredReports.length === 0 && (
+      {filteredReports.length === 0 && (
         <p>No matching reports found.</p>
       )}
 
@@ -227,13 +310,23 @@ function ReportList({ refreshKey, userId }) {
               </p>
             </div>
 
-            <button
-              type="button"
-              className="edit-report-btn"
-              onClick={() => startEditing(report)}
-            >
-              Edit Report
-            </button>
+            <div className="report-actions">
+              <button
+                type="button"
+                className="edit-report-btn"
+                onClick={() => startEditing(report)}
+              >
+                Edit Report
+              </button>
+
+              <button
+                type="button"
+                className="delete-report-btn"
+                onClick={() => startDeleting(report)}
+              >
+                Delete Report
+              </button>
+            </div>
           </article>
         ))}
       </div>
@@ -268,7 +361,7 @@ function ReportList({ refreshKey, userId }) {
         </div>
       )}
 
-      {/* Edit modal: outside the report-card loop */}
+      {/* EDIT MODAL */}
       {editingReport && (
         <div
           className="edit-modal-overlay"
@@ -299,6 +392,7 @@ function ReportList({ refreshKey, userId }) {
                 type="button"
                 className="edit-close-btn"
                 onClick={closeEditModal}
+                disabled={savingEdit}
                 aria-label="Close edit form"
               >
                 ×
@@ -316,7 +410,6 @@ function ReportList({ refreshKey, userId }) {
                   name="title"
                   value={editData.title}
                   onChange={handleEditChange}
-                  placeholder="e.g. Wi-Fi not working"
                   maxLength={200}
                   required
                   autoFocus
@@ -333,7 +426,6 @@ function ReportList({ refreshKey, userId }) {
                   name="description"
                   value={editData.description}
                   onChange={handleEditChange}
-                  placeholder="Describe the issue and how it affects students..."
                   rows={4}
                   required
                 />
@@ -350,7 +442,6 @@ function ReportList({ refreshKey, userId }) {
                     name="category"
                     value={editData.category}
                     onChange={handleEditChange}
-                    placeholder="e.g. Network"
                     maxLength={50}
                     required
                   />
@@ -366,7 +457,6 @@ function ReportList({ refreshKey, userId }) {
                     name="location"
                     value={editData.location}
                     onChange={handleEditChange}
-                    placeholder="e.g. Computer Lab 1"
                     maxLength={150}
                     required
                   />
@@ -389,6 +479,7 @@ function ReportList({ refreshKey, userId }) {
                 type="button"
                 className="edit-cancel-btn"
                 onClick={closeEditModal}
+                disabled={savingEdit}
               >
                 Cancel
               </button>
@@ -396,11 +487,76 @@ function ReportList({ refreshKey, userId }) {
               <button
                 type="submit"
                 className="edit-save-btn"
+                disabled={savingEdit}
               >
-                Save Changes
+                {savingEdit ? "Saving..." : "Save Changes"}
               </button>
             </div>
           </form>
+        </div>
+      )}
+
+      {/* DELETE CONFIRMATION MODAL */}
+      {deletingReport && (
+        <div
+          className="delete-modal-overlay"
+          onClick={closeDeleteModal}
+        >
+          <div
+            className="delete-modal"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="delete-modal-title"
+            aria-describedby="delete-modal-description"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <div className="delete-modal-icon">
+              <span aria-hidden="true">!</span>
+            </div>
+
+            <span className="delete-eyebrow">
+              DELETE CONFIRMATION
+            </span>
+
+            <h2 id="delete-modal-title">
+              Delete this report?
+            </h2>
+
+            <p id="delete-modal-description">
+              You're about to permanently delete{" "}
+              <strong>{deletingReport.title}</strong>. This action
+              cannot be undone.
+            </p>
+
+            {deleteMessage && (
+              <p
+                className="delete-inline-message"
+                role="status"
+              >
+                {deleteMessage}
+              </p>
+            )}
+
+            <div className="delete-modal-actions">
+              <button
+                type="button"
+                className="delete-cancel-btn"
+                onClick={closeDeleteModal}
+                disabled={deleting}
+              >
+                Cancel
+              </button>
+
+              <button
+                type="button"
+                className="delete-confirm-btn"
+                onClick={handleDeleteReport}
+                disabled={deleting}
+              >
+                {deleting ? "Deleting..." : "Delete Report"}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </section>
