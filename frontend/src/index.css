@@ -668,3 +668,226 @@ h2 {
     flex-direction: column;
   }
 }
+
+/* ===== Report Action Buttons ===== */
+
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.report-actions button {
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.report-actions .edit-report-btn {
+  margin-top: 0;
+}
+
+.delete-report-btn {
+  border: 1px solid #fecaca;
+  background: #fff1f2;
+  color: #b91c1c;
+}
+
+.delete-report-btn:hover {
+  background: #fee2e2;
+  transform: translateY(-1px);
+}
+
+.report-actions button:focus-visible,
+.delete-modal button:focus-visible {
+  outline: 3px solid #fca5a5;
+  outline-offset: 3px;
+}
+
+/* ===== Delete Confirmation Modal ===== */
+
+.delete-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(5px);
+
+  animation: deleteOverlayIn 0.2s ease;
+}
+
+.delete-modal {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 440px;
+  padding: 32px 28px 26px;
+
+  border: 1px solid #fee2e2;
+  border-radius: 20px;
+  background: #ffffff;
+  color: #0f172a;
+
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+
+  animation: deleteModalIn 0.25s ease;
+}
+
+.delete-modal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 18px;
+
+  border: 1px solid #fecaca;
+  border-radius: 18px;
+  background: #fff1f2;
+  color: #dc2626;
+}
+
+.delete-modal-icon span {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.delete-eyebrow {
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.4px;
+}
+
+.delete-modal h2 {
+  margin: 10px 0;
+  color: #111827;
+  font-size: 24px;
+  font-weight: 750;
+}
+
+.delete-modal > p {
+  margin: 0;
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.delete-modal > p strong {
+  color: #334155;
+}
+
+.delete-inline-message {
+  margin-top: 16px !important;
+  padding: 10px 12px;
+  border: 1px solid #fecaca;
+  border-radius: 9px;
+  background: #fff1f2;
+  color: #b91c1c !important;
+  font-size: 13px !important;
+}
+
+.delete-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 26px;
+}
+
+.delete-modal-actions button {
+  flex: 1;
+  min-width: 0;
+  min-height: 44px;
+  padding: 11px 14px;
+
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 650;
+
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.delete-cancel-btn {
+  border: 1px solid #cbd5e1;
+  background: #ffffff;
+  color: #334155;
+}
+
+.delete-cancel-btn:hover:not(:disabled) {
+  background: #f1f5f9;
+}
+
+.delete-confirm-btn {
+  border: 1px solid #dc2626;
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.delete-confirm-btn:hover:not(:disabled) {
+  background: #b91c1c;
+  transform: translateY(-1px);
+}
+
+.delete-modal-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+@keyframes deleteOverlayIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes deleteModalIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 480px) {
+  .delete-modal-overlay {
+    padding: 14px;
+  }
+
+  .delete-modal {
+    padding: 26px 18px 20px;
+    border-radius: 16px;
+  }
+
+  .delete-modal h2 {
+    font-size: 21px;
+  }
+
+  .delete-modal-actions {
+    gap: 8px;
+  }
+
+  .delete-modal-actions button {
+    padding: 10px 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .delete-modal-overlay,
+  .delete-modal {
+    animation: none;
+  }
+}
