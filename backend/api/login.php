@@ -1,4 +1,3 @@
-
 <?php
 
 // Return responses in JSON format
