@@ -215,3 +215,39 @@
   background: #fee2e2;
   color: #991b1b;
 }
+
+@media (max-width: 900px) {
+  .admin-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-container {
+    padding: 16px;
+  }
+
+  .admin-header {
+    align-items: flex-start;
+  }
+
+  .admin-header h1 {
+    font-size: 24px;
+  }
+
+  .admin-stats {
+    gap: 10px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .admin-reports {
+    padding: 16px;
+  }
+
+  .reports-heading {
+    align-items: flex-start;
+  }
+}
