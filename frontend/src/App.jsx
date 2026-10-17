@@ -1,7 +1,8 @@
 import { useState } from "react";
 import Dashboard from "./Components/Dashboard";
 import Login from "./Components/login";
-import Register from "./components/Register";
+import Register from "./Components/register";
+import AdminDashboard from "./Components/AdminDashboard";
 import "./index.css";
 
 // Restore the saved user when the app starts
@@ -17,11 +18,15 @@ function getSavedUser() {
 function App() {
   const [user, setUser] = useState(() => getSavedUser());
 
-  const [currentPage, setCurrentPage] = useState(() =>
-    getSavedUser() ? "dashboard" : "login"
-  );
+  const [currentPage, setCurrentPage] = useState(() => {
+    const savedUser = getSavedUser();
 
-  // Save user details after successful login
+    if (!savedUser) return "login";
+
+    return savedUser.role === "admin" ? "admin" : "dashboard";
+  });
+
+  // Save the logged-in user's details
   function handleLoginSuccess(userData) {
     sessionStorage.setItem(
       "campusReporterUser",
@@ -29,10 +34,14 @@ function App() {
     );
 
     setUser(userData);
-    setCurrentPage("dashboard");
+
+    // Open the correct dashboard based on the user's role
+    setCurrentPage(
+      userData.role === "admin" ? "admin" : "dashboard"
+    );
   }
 
-  // Clear saved user details on logout
+  // Log out the user
   function handleLogout() {
     sessionStorage.removeItem("campusReporterUser");
 
@@ -40,14 +49,36 @@ function App() {
     setCurrentPage("login");
   }
 
-  if (currentPage === "dashboard" && user) {
-    return <Dashboard user={user} onLogout={handleLogout} />;
+  // Show the admin dashboard
+  if (user && currentPage === "admin" && user.role === "admin") {
+    return (
+      <AdminDashboard
+        user={user}
+        onLogout={handleLogout}
+      />
+    );
   }
 
+  // Show the student dashboard
+  if (user && currentPage === "dashboard") {
+    return (
+      <Dashboard
+        user={user}
+        onLogout={handleLogout}
+      />
+    );
+  }
+
+  // Show registration
   if (currentPage === "register") {
-    return <Register onLogin={() => setCurrentPage("login")} />;
+    return (
+      <Register
+        onLogin={() => setCurrentPage("login")}
+      />
+    );
   }
 
+  // Show login
   return (
     <Login
       onCreateAccount={() => setCurrentPage("register")}
