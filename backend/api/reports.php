@@ -36,7 +36,7 @@ try {
         FROM reports
         JOIN users
             ON reports.user_id = users.id
-        ORDER BY reports.id DESC"
+        ORDER BY reports.id"
     );
 
     $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
