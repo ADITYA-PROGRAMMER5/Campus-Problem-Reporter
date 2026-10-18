@@ -15,7 +15,11 @@ function AdminDashboard({ user, onLogout }) {
       setLoading(true);
       setError("");
 
-      const response = await fetch(API_URL);
+      const response = await fetch(API_URL, {
+        method: "GET",
+        credentials: "include",
+      });
+
       const data = await response.json();
 
       if (!response.ok || !data.success) {
