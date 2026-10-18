@@ -55,9 +55,9 @@ function AdminDashboard({ user, onLogout }) {
     filter === "all"
       ? reports
       : reports.filter(
-          (report) =>
-            report.status.toLowerCase() === filter.toLowerCase()
-        );
+        (report) =>
+          report.status.toLowerCase() === filter.toLowerCase()
+      );
 
   return (
     <main className="admin-container">
@@ -186,13 +186,19 @@ function AdminDashboard({ user, onLogout }) {
                     </td>
 
                     <td>
-                      <span
-                        className={`status-badge ${report.status
+                      <select
+                        className={`status-select ${report.status
                           .toLowerCase()
                           .replace(/\s+/g, "-")}`}
+                        value={report.status.toLowerCase()}
+                        onChange={(event) =>
+                          handleStatusChange(report.id, event.target.value)
+                        }
                       >
-                        {report.status}
-                      </span>
+                        <option value="pending">Pending</option>
+                        <option value="in progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                      </select>
                     </td>
                   </tr>
                 ))}
