@@ -1,10 +1,15 @@
 <?php
 
+session_start();
+
 // Browser ko bata raha hai ki API JSON format me data bhej rahi hai
 header("Content-Type: application/json");
 
 // React frontend ko PHP API access karne ki permission
 header("Access-Control-Allow-Origin: http://localhost:5173");
+
+// React frontend ko PHP session cookie bhejne ki permission
+header("Access-Control-Allow-Credentials: true");
 
 // Allowed HTTP methods
 header("Access-Control-Allow-Methods: GET, OPTIONS");
