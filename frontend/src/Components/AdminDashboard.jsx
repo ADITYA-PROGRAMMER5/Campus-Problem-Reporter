@@ -65,6 +65,7 @@ function AdminDashboard({ user, onLogout }) {
         "http://localhost:8000/api/adminUpdateReportStatus.php",
         {
           method: "POST",
+          credentials: "include", // Send the PHP session cookie
           headers: {
             "Content-Type": "application/json",
           },
