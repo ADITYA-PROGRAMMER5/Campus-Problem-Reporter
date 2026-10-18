@@ -1,5 +1,7 @@
 <?php
 
+session_start(); // Start or resume the PHP session
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost:5173");
 header("Access-Control-Allow-Credentials: true");
