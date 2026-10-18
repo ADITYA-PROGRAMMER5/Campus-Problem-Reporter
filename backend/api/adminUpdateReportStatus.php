@@ -11,6 +11,24 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
+if (!isset($_SESSION["user_id"])) {
+    http_response_code(401);
+    echo json_encode([
+        "success" => false,
+        "message" => "Please log in first."
+    ]);
+    exit;
+}
+
+if (($_SESSION["role"] ?? "") !== "admin") {
+    http_response_code(403);
+    echo json_encode([
+        "success" => false,
+        "message" => "Admin access required."
+    ]);
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     http_response_code(405);
 
