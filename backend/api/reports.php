@@ -23,6 +23,36 @@ if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     exit;
 }
 
+// Only GET requests are allowed
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    http_response_code(405);
+    echo json_encode([
+        "success" => false,
+        "message" => "Only GET requests are allowed"
+    ]);
+    exit;
+}
+
+// Require an active login session
+if (!isset($_SESSION["user_id"])) {
+    http_response_code(401);
+    echo json_encode([
+        "success" => false,
+        "message" => "Please log in first."
+    ]);
+    exit;
+}
+
+// Only admins can view all student reports
+if (($_SESSION["role"] ?? "") !== "admin") {
+    http_response_code(403);
+    echo json_encode([
+        "success" => false,
+        "message" => "Admin access required."
+    ]);
+    exit;
+}
+
 require_once "../db.php";
 
 try {
