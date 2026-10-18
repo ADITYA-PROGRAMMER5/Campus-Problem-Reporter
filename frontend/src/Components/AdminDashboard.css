@@ -251,3 +251,28 @@
     align-items: flex-start;
   }
 }
+
+.status-select {
+  padding: 7px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: white;
+}
+
+.status-select.pending {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.status-select.in-progress {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.status-select.resolved {
+  background: #dcfce7;
+  color: #166534;
+}
