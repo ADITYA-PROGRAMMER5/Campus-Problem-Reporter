@@ -59,6 +59,42 @@ function AdminDashboard({ user, onLogout }) {
           report.status.toLowerCase() === filter.toLowerCase()
       );
 
+  async function handleStatusChange(reportId, newStatus) {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/adminUpdateReportStatus.php",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: reportId,
+            status: newStatus,
+          }),
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Status update failed.");
+      }
+
+      // Update the report immediately on the screen
+      setReports((previousReports) =>
+        previousReports.map((report) =>
+          Number(report.id) === Number(reportId)
+            ? { ...report, status: newStatus }
+            : report
+        )
+      );
+    } catch (error) {
+      alert(error.message || "Could not update report status.");
+      fetchReports();
+    }
+  }
+
   return (
     <main className="admin-container">
       <header className="admin-header">
