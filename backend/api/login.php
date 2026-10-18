@@ -89,6 +89,13 @@ try {
         exit;
     }
 
+   // Regenerate the session ID after successful login
+    session_regenerate_id(true);
+
+    // Store trusted identity details on the server
+    $_SESSION["user_id"] = (int) $user["id"];
+    $_SESSION["role"] = $user["role"];
+
     // Remove the password hash before returning user data
     unset($user["password"]);
 
