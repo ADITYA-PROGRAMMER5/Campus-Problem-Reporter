@@ -25,6 +25,7 @@ export async function registerStudent(formData) {
 export async function loginStudent(formData) {
   const response = await fetch(`${API_BASE_URL}/login.php`, {
     method: "POST",
+    credentials: "include", // Send the PHP session cookie
     headers: {
       "Content-Type": "application/json",
     },
