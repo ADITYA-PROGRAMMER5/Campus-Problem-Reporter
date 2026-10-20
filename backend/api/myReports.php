@@ -1,15 +1,20 @@
 <?php
 
+session_start();
+
 header("Content-Type: application/json");
 header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: GET, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 
+// Handle browser preflight requests
 if ($_SERVER["REQUEST_METHOD"] === "OPTIONS") {
     http_response_code(204);
     exit;
 }
 
+// Only GET requests are allowed
 if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     http_response_code(405);
     echo json_encode([
@@ -19,22 +24,23 @@ if ($_SERVER["REQUEST_METHOD"] !== "GET") {
     exit;
 }
 
-require_once "../db.php";
-
-// Get the student ID from the URL
-$userId = filter_input(INPUT_GET, "user_id", FILTER_VALIDATE_INT);
-
-if (!$userId || $userId < 1) {
-    http_response_code(400);
+// Check whether the user is logged in
+if (!isset($_SESSION["user_id"])) {
+    http_response_code(401);
     echo json_encode([
         "success" => false,
-        "message" => "A valid user ID is required."
+        "message" => "Please log in first."
     ]);
     exit;
 }
 
+// Use the ID from the PHP session, not the URL
+$userId = (int) $_SESSION["user_id"];
+
+require_once "../db.php";
+
 try {
-    // Fetch reports submitted by this student only
+    // Fetch only reports belonging to the logged-in student
     $stmt = $pdo->prepare("
         SELECT
             id,
@@ -51,7 +57,7 @@ try {
     ");
 
     $stmt->execute(["user_id" => $userId]);
-    $reports = $stmt->fetchAll();
+    $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     echo json_encode([
         "success" => true,
@@ -59,6 +65,8 @@ try {
     ]);
 
 } catch (PDOException $e) {
+    error_log($e->getMessage());
+
     http_response_code(500);
     echo json_encode([
         "success" => false,
