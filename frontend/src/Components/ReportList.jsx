@@ -107,12 +107,12 @@ function ReportList({ refreshKey, userId }) {
         "http://localhost:8000/api/updateReport.php",
         {
           method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
             id: editingReport.id,
-            user_id: userId,
             ...editData,
           }),
         }
