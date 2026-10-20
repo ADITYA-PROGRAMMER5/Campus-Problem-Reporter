@@ -1,6 +1,9 @@
 <?php
 
+session_start();
+
 header("Access-Control-Allow-Origin: http://localhost:5173");
+header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header("Content-Type: application/json; charset=UTF-8");
@@ -21,8 +24,21 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     exit;
 }
 
+// Check the PHP session.
+if (!isset($_SESSION["user_id"])) {
+    http_response_code(401);
+    echo json_encode([
+        "success" => false,
+        "message" => "Please log in first."
+    ]);
+    exit;
+}
+
+// Get the ID from the server-side session.
+// Never trust the user ID sent by React.
+$userId = (int) $_SESSION["user_id"];
+
 // Connect to PostgreSQL.
-// This assumes db.php is inside the backend folder.
 require_once __DIR__ . "/../db.php";
 
 // Read JSON sent by React.
@@ -39,7 +55,6 @@ if (!is_array($data)) {
 
 // Read and validate the report fields.
 $id = filter_var($data["id"] ?? null, FILTER_VALIDATE_INT);
-$userId = filter_var($data["user_id"] ?? null, FILTER_VALIDATE_INT);
 
 $title = trim($data["title"] ?? "");
 $description = trim($data["description"] ?? "");
@@ -47,7 +62,7 @@ $category = trim($data["category"] ?? "");
 $location = trim($data["location"] ?? "");
 
 if (
-    !$id || !$userId ||
+    !$id || $id < 1 ||
     $title === "" ||
     $description === "" ||
     $category === "" ||
@@ -75,7 +90,7 @@ if (
 }
 
 try {
-    // Update only a report belonging to this user ID.
+    // Update only a report owned by the logged-in user.
     $sql = "UPDATE reports
             SET title = :title,
                 description = :description,
@@ -115,6 +130,8 @@ try {
     ]);
 
 } catch (PDOException $e) {
+    error_log($e->getMessage());
+
     http_response_code(500);
     echo json_encode([
         "success" => false,
