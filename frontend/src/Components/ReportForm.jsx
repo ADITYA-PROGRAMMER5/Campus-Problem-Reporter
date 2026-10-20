@@ -34,6 +34,7 @@ function ReportForm({ userId, onReportCreated }) {
         "http://localhost:8000/api/createReport.php",
         {
           method: "POST",
+          credentials: "include", // Include cookies for session management
           headers: {
             "Content-Type": "application/json",
           },
