@@ -25,7 +25,11 @@ function ReportList({ refreshKey, userId }) {
 
     try {
       const response = await fetch(
-        `http://localhost:8000/api/myReports.php?user_id=${userId}`
+        "http://localhost:8000/api/myReports.php",
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
 
       const data = await response.json();
