@@ -30,3 +30,16 @@ A web based application that allows college students to report campus problems a
 - Database queries using PDO prepared statements
 - Logout endpoint to destroy the server-side session
 
+## 🛠️ Tech Stack
+
+| Technology | Purpose |
+|---|---|
+| React | Frontend UI |
+| Vite | Frontend development server |
+| JavaScript | Application logic |
+| CSS | Styling and responsive layout |
+| PHP | Backend API |
+| PostgreSQL | Database |
+| PDO | Database access |
+| Git & GitHub | Version control |
+
