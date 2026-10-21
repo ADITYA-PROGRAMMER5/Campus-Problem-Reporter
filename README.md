@@ -21,3 +21,12 @@ A web based application that allows college students to report campus problems a
 - Update report status
 - Refresh report data
 
+### 🔐 Security
+- Password hashing
+- PHP session-based authentication
+- Role-based access checks for admin functionality
+- Report ownership checks for student updates and deletions
+- Server-side validation of report input
+- Database queries using PDO prepared statements
+- Logout endpoint to destroy the server-side session
+
