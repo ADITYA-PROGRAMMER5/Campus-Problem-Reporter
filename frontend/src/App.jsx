@@ -42,11 +42,31 @@ function App() {
   }
 
   // Log out the user
-  function handleLogout() {
-    sessionStorage.removeItem("campusReporterUser");
+  async function handleLogout() {
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/logout.php",
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
-    setUser(null);
-    setCurrentPage("login");
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Logout failed.");
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      // Clear frontend login information
+      sessionStorage.removeItem("campusReporterUser");
+
+      // Reset React state
+      setUser(null);
+      setCurrentPage("login");
+    }
   }
 
   // Show the admin dashboard
