@@ -43,3 +43,41 @@ A web based application that allows college students to report campus problems a
 | PDO | Database access |
 | Git & GitHub | Version control |
 
+## 📁 Project Structure
+
+```text
+CampusProblemReporter/
+├── frontend/
+│   └── src/
+│       ├── Components/
+│       │   ├── Dashboard.jsx
+│       │   ├── login.jsx
+│       │   ├── register.jsx
+│       │   ├── ReportForm.jsx
+│       │   ├── ReportList.jsx
+│       │   ├── AdminDashboard.jsx
+│       │   └── AdminDashboard.css
+│       └── Services/
+│           └── api.js
+│
+├── backend/
+│   ├── api/
+│   │   ├── login.php
+│   │   ├── register.php
+│   │   ├── logout.php
+│   │   ├── createReport.php
+│   │   ├── myReports.php
+│   │   ├── reports.php
+│   │   ├── users.php
+│   │   ├── test.php
+│   │   ├── updateReport.php
+│   │   ├── deleteReport.php
+│   │   └── adminUpdateReportStatus.php
+│   ├── db.php
+│   └── config.php
+│
+└── README.md
+```
+
+*Note: The structure above highlights the main files. Your actual repository may contain additional files.*
+
