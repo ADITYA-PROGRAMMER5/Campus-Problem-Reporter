@@ -76,7 +76,8 @@ CampusProblemReporter/
 │   ├── db.php
 │   └── config.php
 │
-└── README.md
+├── README.md
+└── LICENSE
 ```
 
 *Note: The structure above highlights the main files. Your actual repository may contain additional files.*
