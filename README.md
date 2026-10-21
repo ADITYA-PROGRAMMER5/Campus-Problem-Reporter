@@ -80,5 +80,11 @@ CampusProblemReporter/
 └── LICENSE
 ```
 
-*Note: The structure above highlights the main files. Your actual repository may contain additional files.*
+## ⚙️ Prerequisites
 
+Install the following before running the project:
+
+- [Node.js](https://nodejs.org/)
+- [PostgreSQL](https://www.postgresql.org/download/)
+- [PHP](https://www.php.net/downloads.php)
+- Git (optional, for cloning the repository)
