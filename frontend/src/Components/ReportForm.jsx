@@ -40,7 +40,6 @@ function ReportForm({ userId, onReportCreated }) {
           },
           body: JSON.stringify({
             ...formData,
-            user_id: userId,
           }),
         }
       );
