@@ -221,3 +221,7 @@ Reports can use statuses such as:
 - Enforce authentication and authorization in backend APIs, not only in React.
 - Use HTTPS and secure cookie settings when deploying to production.
 - Review all API endpoints before deploying publicly.
+
+## 🎯 Project Objective
+
+The goal of this project is to make campus issue reporting more organized, transparent, and manageable by providing a central platform for students and administrators.
