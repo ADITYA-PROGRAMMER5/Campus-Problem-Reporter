@@ -14,7 +14,7 @@ A web based application that allows college students to report campus problems a
 - Track report status
 
 ### 🛡️ Admin
-- Secure admin login using the shared login page
+- Admin login using the shared login page
 - View submitted student reports
 - View report statistics
 - Filter reports by status
@@ -94,21 +94,23 @@ Install the following before running the project:
 ### 1. Clone the repository
 
 ```bash
-https://github.com/ADITYA-PROGRAMMER5/Campus-Problem-Reporter.git
-cd CampusProblemReporter
+git clone https://github.com/ADITYA-PROGRAMMER5/Campus-Problem-Reporter.git
+cd Campus-Problem-Reporter
 ```
 
-### 2. Set up the database
+### 2. Create the database
 
-Open PostgreSQL and create a database:
+Open PostgreSQL using pgAdmin or `psql` and execute:
 
 ```sql
 CREATE DATABASE campus_problem_reporter;
 ```
 
-### 3. Create the `users` Table
+Connect to the newly created `campus_problem_reporter` database before creating the tables.
 
-This table stores user information, including student and admin accounts.
+### 3. Create the `users` table
+
+This table stores student and administrator account information.
 
 ```sql
 CREATE TABLE users (
@@ -121,9 +123,9 @@ CREATE TABLE users (
 );
 ```
 
-### 4. Create the `reports` Table
+### 4. Create the `reports` table
 
-This table stores campus problem reports submitted by users. Each report is linked to a user through `user_id`.
+This table stores campus problem reports. Each report belongs to a user through the `user_id` foreign key.
 
 ```sql
 CREATE TABLE reports (
@@ -146,20 +148,22 @@ CREATE TABLE reports (
 
 ### Database Relationships
 
-- **Primary keys:** `id` uniquely identifies each user and report.
+- **Primary keys:** The `id` column uniquely identifies each user and report.
 - **Foreign key:** `reports.user_id` references `users.id`.
-- **Unique email:** Each user must register with a different email address.
-- **Default role:** New users receive the `student` role unless an authorized administrator assigns a different role.
-- **Default priority:** New reports have `medium` priority.
+- **Unique email:** Each account must use a unique email address.
+- **Default role:** New users receive the `student` role.
+- **Default priority:** New reports use `medium` priority.
 - **Default status:** New reports start with `pending` status.
 
 **Important:** Create the `users` table before the `reports` table because the reports table references the users table.
 
+The `updated_at` column receives its initial timestamp when the report is created. Automatically updating it when a report changes requires additional backend logic or a database trigger.
+
 ### 5. Configure the backend
 
-Configure your PostgreSQL connection in the backend configuration file.
+Configure the PostgreSQL connection in the backend configuration files according to your local environment.
 
-Keep database credentials private. Do not commit passwords, secrets, or other sensitive configuration to GitHub.
+Keep database credentials private. Do not commit passwords or other sensitive configuration to GitHub.
 
 Start the PHP development server from the `backend` directory:
 
@@ -167,15 +171,15 @@ Start the PHP development server from the `backend` directory:
 php -S localhost:8000
 ```
 
-The backend API will be available at:
+The backend API base URL is:
 
 ```text
 http://localhost:8000/api/
 ```
 
-### 6. Configure and start the frontend
+### 6. Install and start the frontend
 
-Open a separate terminal:
+Open a separate terminal and run:
 
 ```bash
 cd frontend
@@ -183,13 +187,17 @@ npm install
 npm run dev
 ```
 
-Open the local URL shown by Vite, typically:
+Open the local URL displayed by Vite, typically:
 
 ```text
 http://localhost:5173
 ```
 
+Keep both development servers running while using the application.
+
 ## 🔌 API Endpoints
+
+The following endpoints are available in the backend API.
 
 | Method | Endpoint | Purpose |
 |---|---|---|
@@ -201,17 +209,15 @@ http://localhost:5173
 | GET | `reports.php` | Fetch reports for the admin dashboard |
 | POST | `updateReport.php` | Update an owned report |
 | POST | `deleteReport.php` | Delete an owned report |
-| POST | `adminUpdateReportStatus.php` | Update a report's status as an admin |
+| POST | `adminUpdateReportStatus.php` | Update report status as an admin |
 
 Protected endpoints require an authenticated PHP session. Access depends on the user's role and, for student report operations, report ownership.
 
 ## 🔄 Report Statuses
 
-Reports can use statuses such as:
-
-- **Pending** — The issue is awaiting action.
-- **In Progress** — The issue is being addressed.
-- **Resolved** — The issue has been resolved.
+- **Pending:** The issue is awaiting action.
+- **In Progress:** The issue is being addressed.
+- **Resolved:** The issue has been resolved.
 
 ## 🔒 Security Notes
 
@@ -220,7 +226,7 @@ Reports can use statuses such as:
 - Validate user input on the server.
 - Enforce authentication and authorization in backend APIs, not only in React.
 - Use HTTPS and secure cookie settings when deploying to production.
-- Review all API endpoints before deploying publicly.
+- Review and test all API endpoints before deploying publicly.
 
 ## 🎯 Project Objective
 
@@ -230,7 +236,7 @@ The goal of this project is to make campus issue reporting more organized, trans
 
 [Aditya Jadhav](https://github.com/ADITYA-PROGRAMMER5)
 
-BCA Student | Aspiring Full-Stack Developer
+**BCA Student | Aspiring Full-Stack Developer**
 
 ---
 
