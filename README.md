@@ -188,3 +188,19 @@ Open the local URL shown by Vite, typically:
 ```text
 http://localhost:5173
 ```
+
+## 🔌 API Endpoints
+
+| Method | Endpoint | Purpose |
+|---|---|---|
+| POST | `register.php` | Register an account |
+| POST | `login.php` | Authenticate a user |
+| POST | `logout.php` | End the current session |
+| POST | `createReport.php` | Create a report |
+| GET | `myReports.php` | Fetch the logged-in student's reports |
+| GET | `reports.php` | Fetch reports for the admin dashboard |
+| POST | `updateReport.php` | Update an owned report |
+| POST | `deleteReport.php` | Delete an owned report |
+| POST | `adminUpdateReportStatus.php` | Update a report's status as an admin |
+
+Protected endpoints require an authenticated PHP session. Access depends on the user's role and, for student report operations, report ownership.
