@@ -143,3 +143,14 @@ CREATE TABLE reports (
         REFERENCES users(id)
 );
 ```
+
+### Database Relationships
+
+- **Primary keys:** `id` uniquely identifies each user and report.
+- **Foreign key:** `reports.user_id` references `users.id`.
+- **Unique email:** Each user must register with a different email address.
+- **Default role:** New users receive the `student` role unless an authorized administrator assigns a different role.
+- **Default priority:** New reports have `medium` priority.
+- **Default status:** New reports start with `pending` status.
+
+**Important:** Create the `users` table before the `reports` table because the reports table references the users table.
