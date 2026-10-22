@@ -154,3 +154,21 @@ CREATE TABLE reports (
 - **Default status:** New reports start with `pending` status.
 
 **Important:** Create the `users` table before the `reports` table because the reports table references the users table.
+
+### 5. Configure the backend
+
+Configure your PostgreSQL connection in the backend configuration file.
+
+Keep database credentials private. Do not commit passwords, secrets, or other sensitive configuration to GitHub.
+
+Start the PHP development server from the `backend` directory:
+
+```bash
+php -S localhost:8000
+```
+
+The backend API will be available at:
+
+```text
+http://localhost:8000/api/
+```
