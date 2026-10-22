@@ -88,3 +88,13 @@ Install the following before running the project:
 - [PostgreSQL](https://www.postgresql.org/download/)
 - [PHP](https://www.php.net/downloads.php)
 - Git (optional, for cloning the repository)
+
+## 💻 Installation and Setup
+
+### 1. Clone the repository
+
+```bash
+https://github.com/ADITYA-PROGRAMMER5/Campus-Problem-Reporter.git
+cd CampusProblemReporter
+```
+
