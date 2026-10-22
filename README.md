@@ -98,3 +98,10 @@ https://github.com/ADITYA-PROGRAMMER5/Campus-Problem-Reporter.git
 cd CampusProblemReporter
 ```
 
+### 2. Set up the database
+
+Open PostgreSQL and create a database:
+
+```sql
+CREATE DATABASE campus_problem_reporter;
+```
