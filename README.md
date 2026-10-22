@@ -105,3 +105,18 @@ Open PostgreSQL and create a database:
 ```sql
 CREATE DATABASE campus_problem_reporter;
 ```
+
+### 3. Create the `users` Table
+
+This table stores user information, including student and admin accounts.
+
+```sql
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(20) NOT NULL DEFAULT 'student',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+```
