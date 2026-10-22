@@ -225,3 +225,13 @@ Reports can use statuses such as:
 ## 🎯 Project Objective
 
 The goal of this project is to make campus issue reporting more organized, transparent, and manageable by providing a central platform for students and administrators.
+
+## 👨‍💻 Author
+
+[Aditya Jadhav](https://github.com/ADITYA-PROGRAMMER5)
+
+BCA Student | Aspiring Full-Stack Developer
+
+---
+
+*Built as a learning project to practice React, PHP, PostgreSQL, API development, authentication, and full-stack application design.*
