@@ -120,3 +120,26 @@ CREATE TABLE users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 ```
+
+### 4. Create the `reports` Table
+
+This table stores campus problem reports submitted by users. Each report is linked to a user through `user_id`.
+
+```sql
+CREATE TABLE reports (
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER NOT NULL,
+    title VARCHAR(200) NOT NULL,
+    description TEXT NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    location VARCHAR(150) NOT NULL,
+    priority VARCHAR(20) NOT NULL DEFAULT 'medium',
+    status VARCHAR(30) NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_report_user
+        FOREIGN KEY (user_id)
+        REFERENCES users(id)
+);
+```
