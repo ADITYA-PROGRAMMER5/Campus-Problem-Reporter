@@ -204,3 +204,11 @@ http://localhost:5173
 | POST | `adminUpdateReportStatus.php` | Update a report's status as an admin |
 
 Protected endpoints require an authenticated PHP session. Access depends on the user's role and, for student report operations, report ownership.
+
+## 🔄 Report Statuses
+
+Reports can use statuses such as:
+
+- **Pending** — The issue is awaiting action.
+- **In Progress** — The issue is being addressed.
+- **Resolved** — The issue has been resolved.
