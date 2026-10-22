@@ -212,3 +212,12 @@ Reports can use statuses such as:
 - **Pending** — The issue is awaiting action.
 - **In Progress** — The issue is being addressed.
 - **Resolved** — The issue has been resolved.
+
+## 🔒 Security Notes
+
+- Never store plain-text passwords.
+- Keep database credentials out of public repositories.
+- Validate user input on the server.
+- Enforce authentication and authorization in backend APIs, not only in React.
+- Use HTTPS and secure cookie settings when deploying to production.
+- Review all API endpoints before deploying publicly.
