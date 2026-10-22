@@ -172,3 +172,19 @@ The backend API will be available at:
 ```text
 http://localhost:8000/api/
 ```
+
+### 6. Configure and start the frontend
+
+Open a separate terminal:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open the local URL shown by Vite, typically:
+
+```text
+http://localhost:5173
+```
