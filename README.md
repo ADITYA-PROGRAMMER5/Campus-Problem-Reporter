@@ -236,7 +236,7 @@ The goal of this project is to make campus issue reporting more organized, trans
 
 [Aditya Jadhav](https://github.com/ADITYA-PROGRAMMER5)
 
-[Sai Sunil Gawaskar](https://github.com/Saigawaskar⁠⁠)
+[Sai Sunil Gawaskar](https://github.com/search?q=Saigawaskar)
 
 **BCA Student | Aspiring Full-Stack Developer**
 
