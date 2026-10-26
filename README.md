@@ -238,6 +238,8 @@ The goal of this project is to make campus issue reporting more organized, trans
 
 [Sai Sunil Gawaskar](https://github.com/Saigawaskar)
 
+[Raj Khairvar](https://github.com/Rajkhairvar)
+
 **BCA Student | Aspiring Full-Stack Developer**
 
 ---
