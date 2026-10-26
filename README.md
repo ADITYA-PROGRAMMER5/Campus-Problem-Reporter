@@ -234,7 +234,7 @@ The goal of this project is to make campus issue reporting more organized, trans
 
 ## 👨‍💻 Author
 
-👑[Aditya Jadhav](https://github.com/ADITYA-PROGRAMMER5)
+[Aditya Jadhav](https://github.com/ADITYA-PROGRAMMER5)
 
 [Sai Sunil Gawaskar](https://github.com/Saigawaskar)
 
