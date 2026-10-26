@@ -240,7 +240,7 @@ The goal of this project is to make campus issue reporting more organized, trans
 
 [Raj Khairvar](https://github.com/Rajkhairvar)
 
-**BCA Student | Aspiring Full Stack Developer**
+**BCA Students | Aspiring Full Stack Developer**
 
 ---
 
